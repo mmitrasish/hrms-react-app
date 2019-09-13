@@ -1,0 +1,26 @@
+{
+  "users": [
+    {
+      "employeeId": 1,
+      "username": "mitrasish",
+      "password": "12345",
+      "role": "HR",
+      "isActive": true,
+      "isActivated": false,
+      "isTardy": false,
+      "isPunctual": true,
+      "isAbsentee": false
+    },
+    {
+      "username": "vedraj",
+      "password": "23456",
+      "role": "HR",
+      "employeeId": 2,
+      "isActive": false,
+      "isActivated": false,
+      "isTardy": false,
+      "isPunctual": true,
+      "isAbsentee": false
+    }
+  ]
+}
