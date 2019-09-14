@@ -68,7 +68,7 @@ class LoginComponent extends React.Component<RouteComponentProps, ILoginState> {
         <form onSubmit={this.loginUser} className="col-md-4">
           <div
             style={{ marginTop: "5em", padding: "4em" }}
-            className="rounded-lg shadow-sm border bg-secondary text-white"
+            className="rounded-lg shadow border bg-secondary text-white"
           >
             <div className="form-group">
               <label>Username</label>

@@ -11,11 +11,11 @@ const EmployeeTable: React.FC<IEmployeeTableProps> = (
   props: IEmployeeTableProps
 ) => {
   return (
-    <div className="card">
+    <div className="card shadow">
       <div className="card-header bg-secondary text-white">
         <b>All Employees</b>
       </div>
-      <div className="card-body" style={{ padding: 0 }}>
+      <div className="card-body table-responsive" style={{ padding: 0 }}>
         <table className="table table-striped" style={{ margin: 0 }}>
           <thead>
             <tr>

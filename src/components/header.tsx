@@ -65,7 +65,7 @@ const Header: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
                 </li>
               ) : (
                 <li className="nav-item dropdown">
-                  <a
+                  <div
                     className="nav-link dropdown-toggle"
                     id="navbarDropdown"
                     role="button"
@@ -74,7 +74,7 @@ const Header: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
                     aria-expanded="false"
                   >
                     Welcome {localStorage.getItem("loggedUsername")}!
-                  </a>
+                  </div>
                   <div
                     className="dropdown-menu"
                     aria-labelledby="navbarDropdown"

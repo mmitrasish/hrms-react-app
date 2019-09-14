@@ -1,6 +1,6 @@
 import * as React from "react";
-import EmployeeService from "../services/employeeservice";
-import { IEmployee } from "../models/employee";
+import EmployeeService from "../../services/employeeservice";
+import { IEmployee } from "../../models/employee";
 
 interface IProfileState {
   firstname: string;

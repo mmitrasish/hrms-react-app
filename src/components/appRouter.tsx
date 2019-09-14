@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import App from "../App";
 import LoginComponent from "../pages/logincomponent";
 import RegisterComponent from "../pages/registercomponent";
-import AdminComponent from "../pages/admincomponent";
-import HRComponent from "../pages/hrcomponent";
-import EmployeeComponent from "../pages/employeecomponent";
-import ProfileComponent from "../pages/profilecomponent";
+import AdminComponent from "../pages/protected/admincomponent";
+import HRComponent from "../pages/protected/hrcomponent";
+import EmployeeComponent from "../pages/protected/employeecomponent";
+import ProfileComponent from "../pages/protected/profilecomponent";
 
 const AppRouter: React.FC = () => {
   //   'function PrivateRoute({ component: Component, ...rest }) {

@@ -20,7 +20,7 @@
       "firstname": "Ved Raj",
       "lastname": "Joshi",
       "role": "HR",
-      "isActive": true,
+      "isActive": false,
       "isActivated": true,
       "isTardy": false,
       "isPunctual": true,
@@ -33,7 +33,7 @@
       "firstname": "Sahil",
       "lastname": "Kumar",
       "role": "Employee",
-      "isActive": false,
+      "isActive": true,
       "isActivated": true,
       "isTardy": true,
       "isPunctual": false,
@@ -93,8 +93,8 @@
       "isActive": false,
       "isActivated": true,
       "isTardy": false,
-      "isPunctual": true,
-      "isAbsentee": false
+      "isPunctual": false,
+      "isAbsentee": true
     }
   ]
 }
