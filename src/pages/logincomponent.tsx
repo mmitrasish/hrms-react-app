@@ -32,20 +32,30 @@ class LoginComponent extends React.Component<RouteComponentProps, ILoginState> {
           employee.username === this.state.username &&
           employee.password === this.state.password
       ).length > 0;
-    let user = this.state.employeeList.filter(
-      employee =>
-        employee.username === this.state.username &&
-        employee.password === this.state.password
-    )[0];
-    console.log(user);
-    user.isActive = true;
-    console.log(user);
-    localStorage.setItem("isLoggedIn", isUserPresent + "");
-    localStorage.setItem("loggedUsername", this.state.username);
-    EmployeeService.updateEmployee(user, user.employeeId).subscribe(() => {
-      console.log("Update Successful");
-      this.props.history.push("/");
-    });
+    if (isUserPresent) {
+      let user = this.state.employeeList.filter(
+        employee =>
+          employee.username === this.state.username &&
+          employee.password === this.state.password
+      )[0];
+
+      user.isActive = true;
+      let updateLocalStorage = new Promise((success, failure) => {
+        localStorage.setItem("isLoggedIn", isUserPresent + "");
+        localStorage.setItem("loggedUsername", this.state.username);
+        localStorage.setItem("loggedUserRole", user.role);
+        console.log(localStorage.getItem("loggedUserRole"));
+        success();
+      });
+      updateLocalStorage.then(() => {
+        EmployeeService.updateEmployee(user, user.employeeId).subscribe(() => {
+          console.log("Update Successful");
+          this.props.history.push("/");
+        });
+      });
+    } else {
+      this.setState({ username: "", password: "" });
+    }
   };
   componentDidMount() {
     EmployeeService.getEmployee().subscribe((employees: IEmployee[]) => {
@@ -58,7 +68,7 @@ class LoginComponent extends React.Component<RouteComponentProps, ILoginState> {
         <form onSubmit={this.loginUser} className="col-md-4">
           <div
             style={{ marginTop: "5em", padding: "4em" }}
-            className="rounded-lg shadow border bg-secondary text-white"
+            className="rounded-lg shadow-sm border bg-secondary text-white"
           >
             <div className="form-group">
               <label>Username</label>

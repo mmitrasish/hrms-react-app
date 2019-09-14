@@ -44,6 +44,7 @@ export default class HRComponent extends React.Component<{}, IHRState> {
                     employee={employee}
                     role={"hr"}
                     key={employee.employeeId}
+                    activateEmployee={(employeeId, activate) => {}}
                   />
                 ))}
               </tbody>

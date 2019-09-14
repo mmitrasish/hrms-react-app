@@ -42,7 +42,12 @@ export default class EmployeeComponent extends React.Component<
               </thead>
               <tbody>
                 {this.state.employeeList.map((employee: IEmployee) => (
-                  <EmployeeRow employee={employee} role={"employee"} />
+                  <EmployeeRow
+                    employee={employee}
+                    role={"employee"}
+                    key={employee.employeeId}
+                    activateEmployee={(employeeId, activate) => {}}
+                  />
                 ))}
               </tbody>
             </table>

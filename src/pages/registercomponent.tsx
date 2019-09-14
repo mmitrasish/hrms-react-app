@@ -1,6 +1,6 @@
 import * as React from "react";
 import EmployeeService from "../services/employeeservice";
-import { Link } from "react-router-dom";
+import { Link, withRouter, RouteComponentProps } from "react-router-dom";
 
 interface IRegisterState {
   username: string;
@@ -8,8 +8,8 @@ interface IRegisterState {
   role: string;
 }
 
-export default class RegisterComponent extends React.Component<
-  {},
+class RegisterComponent extends React.Component<
+  RouteComponentProps,
   IRegisterState
 > {
   constructor(props: any) {
@@ -34,9 +34,18 @@ export default class RegisterComponent extends React.Component<
     EmployeeService.postEmployee({
       username: this.state.username,
       password: this.state.password,
-      role: this.state.role
+      role: this.state.role,
+      isActive: true,
+      isActivated: this.state.role === "Admin",
+      isTardy: false,
+      isPunctual: true,
+      isAbsentee: false
     }).subscribe(() => {
       console.log("Employee Post Done....");
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("loggedUsername", this.state.username);
+      localStorage.setItem("loggedUserRole", this.state.role);
+      this.props.history.push("/");
     });
   };
   render() {
@@ -101,3 +110,5 @@ export default class RegisterComponent extends React.Component<
     );
   }
 }
+
+export default withRouter(RegisterComponent);

@@ -19,6 +19,26 @@ export default class AdminComponent extends React.Component<{}, IAdminState> {
       this.setState({ employeeList: employees });
     });
   }
+  activateEmployee = (employeeId: number, activate: boolean) => {
+    let selectedEmployee = this.state.employeeList.filter(
+      employee => employee.employeeId === employeeId
+    )[0];
+    selectedEmployee.isActivated = activate;
+    let updatedEmployees: IEmployee[] = [];
+    this.state.employeeList.forEach(employee => {
+      if (employee === selectedEmployee) {
+        employee.isActivated = activate;
+      }
+      updatedEmployees.push(employee);
+    });
+    EmployeeService.updateEmployee(selectedEmployee, employeeId).subscribe(
+      () => {
+        const activateString = activate ? " activated" : " deactivate";
+        console.log("Employee " + selectedEmployee.username + activateString);
+        this.setState({ employeeList: updatedEmployees });
+      }
+    );
+  };
 
   render() {
     return (
@@ -41,7 +61,12 @@ export default class AdminComponent extends React.Component<{}, IAdminState> {
               </thead>
               <tbody>
                 {this.state.employeeList.map((employee: IEmployee) => (
-                  <EmployeeRow employee={employee} role={"Admin"} />
+                  <EmployeeRow
+                    employee={employee}
+                    role={"Admin"}
+                    key={employee.employeeId}
+                    activateEmployee={this.activateEmployee}
+                  />
                 ))}
               </tbody>
             </table>

@@ -5,6 +5,7 @@ import LoginComponent from "../pages/logincomponent";
 import RegisterComponent from "../pages/registercomponent";
 import AdminComponent from "../pages/admincomponent";
 import HRComponent from "../pages/hrcomponent";
+import EmployeeComponent from "../pages/employeecomponent";
 
 const AppRouter: React.FC = () => {
   //   'function PrivateRoute({ component: Component, ...rest }) {
@@ -26,6 +27,7 @@ const AppRouter: React.FC = () => {
   //       />
   //     );
   //   }
+
   return (
     <Router>
       <App>
@@ -35,7 +37,13 @@ const AppRouter: React.FC = () => {
           path="/dashboard"
           render={() =>
             localStorage.getItem("isLoggedIn") === "true" ? (
-              <HRComponent />
+              localStorage.getItem("loggedUserRole") === "Admin" ? (
+                <AdminComponent />
+              ) : localStorage.getItem("loggedUserRole") === "HR" ? (
+                <HRComponent />
+              ) : (
+                <EmployeeComponent />
+              )
             ) : (
               <Redirect to="/login" />
             )

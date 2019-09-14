@@ -1,11 +1,24 @@
 import * as React from "react";
+import EmployeeService from "../services/employeeservice";
+import { IEmployee } from "../models/employee";
 import { Link, withRouter, RouteComponentProps } from "react-router-dom";
 
 const Header: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
   let logout = () => {
-    localStorage.setItem("isLoggedIn", "false");
-    localStorage.removeItem("loggedUsername");
-    props.history.push("/login");
+    EmployeeService.getEmployee().subscribe((employees: IEmployee[]) => {
+      let user = employees.filter(
+        employee => employee.username === localStorage.getItem("loggedUsername")
+      )[0];
+      user.isActive = false;
+      localStorage.setItem("isLoggedIn", "false");
+      localStorage.removeItem("loggedUsername");
+      localStorage.removeItem("loggedUserRole");
+
+      EmployeeService.updateEmployee(user, user.employeeId).subscribe(() => {
+        console.log("Update Successful");
+        props.history.push("/login");
+      });
+    });
   };
   return (
     <div>
@@ -60,7 +73,7 @@ const Header: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    Welcome {localStorage.getItem("loggedUsername")}
+                    Welcome {localStorage.getItem("loggedUsername")}!
                   </a>
                   <div
                     className="dropdown-menu"

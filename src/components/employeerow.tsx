@@ -3,8 +3,15 @@ import { IEmployee } from "../models/employee";
 interface IEmployeeRowProps {
   employee: IEmployee;
   role: string;
+  activateEmployee: (employeeId: number, activate: boolean) => void;
 }
 const EmployeeRow: React.FC<IEmployeeRowProps> = (props: IEmployeeRowProps) => {
+  let activateEmployee = () => {
+    props.activateEmployee(props.employee.employeeId, true);
+  };
+  let deactivateEmployee = () => {
+    props.activateEmployee(props.employee.employeeId, false);
+  };
   return (
     <tr>
       <th scope="row">{props.employee.employeeId}</th>
@@ -26,9 +33,13 @@ const EmployeeRow: React.FC<IEmployeeRowProps> = (props: IEmployeeRowProps) => {
       {props.role === "Admin" ? (
         <td className="px-3 text-center">
           {!props.employee.isActivated ? (
-            <button className="btn btn-success">Activate</button>
+            <button className="btn btn-success" onClick={activateEmployee}>
+              Activate
+            </button>
           ) : (
-            <button className="btn btn-danger">Deactivate</button>
+            <button className="btn btn-danger" onClick={deactivateEmployee}>
+              Deactivate
+            </button>
           )}
         </td>
       ) : null}
