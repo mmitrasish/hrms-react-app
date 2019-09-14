@@ -1,10 +1,12 @@
 import * as React from "react";
 import { IEmployee } from "../models/employee";
 import EmployeeService from "../services/employeeservice";
-import EmployeeRow from "../components/employeerow";
+import ProfileComponent from "./profilecomponent";
+import EmployeeTable from "../components/employeetable";
 
 interface IEmployeeState {
   employeeList: IEmployee[];
+  user: IEmployee;
 }
 
 export default class EmployeeComponent extends React.Component<
@@ -14,45 +16,60 @@ export default class EmployeeComponent extends React.Component<
   constructor(props: any) {
     super(props);
     this.state = {
-      employeeList: []
+      employeeList: [],
+      user: {
+        employeeId: 0,
+        username: "",
+        password: "",
+        firstname: "",
+        lastname: "",
+        role: "",
+        isActive: false,
+        isActivated: false,
+        isTardy: false,
+        isPunctual: false,
+        isAbsentee: false
+      }
     };
   }
   componentDidMount() {
     EmployeeService.getEmployee().subscribe((employees: IEmployee[]) => {
-      this.setState({ employeeList: employees });
+      this.setState({
+        employeeList: employees.filter(
+          employee =>
+            employee.firstname !== undefined &&
+            employee.lastname !== undefined &&
+            employee.isActivated
+        ),
+        user: employees.filter(
+          employee =>
+            employee.username === localStorage.getItem("loggedUsername")
+        )[0]
+      });
     });
   }
 
   render() {
     return (
-      <div className="container pt-4">
-        <div className="card">
-          <div className="card-header bg-secondary text-white">
-            <b>All Employees</b>
+      <div className="Employee">
+        {this.state.user.isActivated ? (
+          <div className="container p-4">
+            <EmployeeTable
+              employeeList={this.state.employeeList}
+              role={"Employee"}
+              activateEmployee={(employeeId, activate) => {}}
+              employeePerformance={(employeeId, performance) => {}}
+            />
           </div>
-          <div className="card-body" style={{ padding: 0 }}>
-            <table className="table table-striped" style={{ margin: 0 }}>
-              <thead>
-                <tr>
-                  <th scope="col">EmployeeId</th>
-                  <th scope="col">Username</th>
-                  <th scope="col">Password</th>
-                  <th scope="col">Role</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.employeeList.map((employee: IEmployee) => (
-                  <EmployeeRow
-                    employee={employee}
-                    role={"employee"}
-                    key={employee.employeeId}
-                    activateEmployee={(employeeId, activate) => {}}
-                  />
-                ))}
-              </tbody>
-            </table>
+        ) : (
+          <div className="container-fluid">
+            <div className="alert alert-danger mx-5 mt-4" role="alert">
+              You have not been activated. Contact admin and update your profile
+              before activating.
+            </div>
+            <ProfileComponent />
           </div>
-        </div>
+        )}
       </div>
     );
   }

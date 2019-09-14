@@ -79,9 +79,9 @@ const Header: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
                     className="dropdown-menu"
                     aria-labelledby="navbarDropdown"
                   >
-                    <a className="dropdown-item" href="#">
+                    <Link className="dropdown-item" to="/profile">
                       Profile
-                    </a>
+                    </Link>
                     <div className="dropdown-divider"></div>
                     <div
                       onClick={logout}

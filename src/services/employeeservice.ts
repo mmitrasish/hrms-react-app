@@ -49,6 +49,8 @@ class EmployeeService {
       employeeId: employee.employeeId,
       username: employee.username,
       password: employee.password,
+      firstname: employee.firstname,
+      lastname: employee.lastname,
       role: employee.role,
       isActive: employee.isActive,
       isActivated: employee.isActivated,

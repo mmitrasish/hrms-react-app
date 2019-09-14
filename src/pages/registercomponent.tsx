@@ -29,11 +29,13 @@ class RegisterComponent extends React.Component<
   loadRole = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ role: event.target.value });
   };
-  loginUser = (event: React.FormEvent<HTMLFormElement>) => {
+  registerUser = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     EmployeeService.postEmployee({
       username: this.state.username,
       password: this.state.password,
+      firstname: "",
+      lastname: "",
       role: this.state.role,
       isActive: true,
       isActivated: this.state.role === "Admin",
@@ -51,7 +53,7 @@ class RegisterComponent extends React.Component<
   render() {
     return (
       <div className="d-flex justify-content-center">
-        <form onSubmit={this.loginUser} className="col-md-4">
+        <form onSubmit={this.registerUser} className="col-md-4">
           <div
             style={{ marginTop: "5em", padding: "4em" }}
             className="rounded-lg shadow border bg-secondary text-white"

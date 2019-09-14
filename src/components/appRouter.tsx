@@ -6,6 +6,7 @@ import RegisterComponent from "../pages/registercomponent";
 import AdminComponent from "../pages/admincomponent";
 import HRComponent from "../pages/hrcomponent";
 import EmployeeComponent from "../pages/employeecomponent";
+import ProfileComponent from "../pages/profilecomponent";
 
 const AppRouter: React.FC = () => {
   //   'function PrivateRoute({ component: Component, ...rest }) {
@@ -33,6 +34,7 @@ const AppRouter: React.FC = () => {
       <App>
         <Route path="/login" component={LoginComponent} />
         <Route path="/register" component={RegisterComponent} />
+        <Route path="/profile" component={ProfileComponent} />
         <Route
           path="/dashboard"
           render={() =>
