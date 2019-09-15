@@ -77,6 +77,7 @@ class RegisterComponent extends React.Component<
                 className="form-control"
                 id="password"
                 placeholder="Password"
+                aria-describedby="paswordHelp"
                 value={this.state.password}
                 onChange={this.loadPassword}
               />
@@ -88,6 +89,7 @@ class RegisterComponent extends React.Component<
                 className="form-control"
                 id="role"
                 placeholder="Your Position"
+                aria-describedby="roleHelp"
                 value={this.state.role}
                 onChange={this.loadRole}
               />

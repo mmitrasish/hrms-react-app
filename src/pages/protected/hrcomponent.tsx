@@ -92,7 +92,7 @@ export default class HRComponent extends React.Component<{}, IHRState> {
       <div className="HR">
         {this.state.isLoaded ? (
           this.state.user.isActivated ? (
-            <div className="container pt-4">
+            <div className="container my-4">
               <div
                 className="row container-fluid mb-4 d-flex justify-content-between"
                 style={{ padding: 0 }}
