@@ -20,7 +20,7 @@
       "firstname": "Ved Raj",
       "lastname": "Joshi",
       "role": "HR",
-      "isActive": true,
+      "isActive": false,
       "isActivated": true,
       "isTardy": false,
       "isPunctual": true,
@@ -98,6 +98,19 @@
       "isActivated": true,
       "isTardy": true,
       "isPunctual": false,
+      "isAbsentee": false
+    },
+    {
+      "employeeId": 9,
+      "username": "mansa",
+      "password": "mansa123",
+      "firstname": "Mansa",
+      "lastname": "Kumari",
+      "role": "HR",
+      "isActive": true,
+      "isActivated": true,
+      "isTardy": false,
+      "isPunctual": true,
       "isAbsentee": false
     }
   ]

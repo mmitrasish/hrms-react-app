@@ -33,87 +33,97 @@ const ReportComponent: React.FC = () => {
       <div className="my-4">
         <h3>View &amp; Download</h3>
       </div>
-      <div className="d-flex justify-content-between">
-        <button
-          type="button"
-          className="btn btn-light border p-4 px-5"
-          onClick={openUserXML}
-        >
-          <div className="mb-2">
-            <img
-              src={xml}
-              alt="xml icon"
-              style={{ height: height, width: width }}
-            />
-          </div>
-          <div>
-            <h4>Users</h4>
-          </div>
-        </button>
-        <button
-          type="button"
-          className="btn btn-light border p-4 px-5"
-          onClick={openUserXLS}
-        >
-          <div className="mb-2">
-            <img
-              src={xls}
-              alt="xls icon"
-              style={{ height: height, width: width }}
-            />
-          </div>
-          <div>
-            <h4>Charts</h4>
-          </div>
-        </button>
-        <button
-          type="button"
-          className="btn btn-light border p-4 px-5"
-          onClick={openUserDOC}
-        >
-          <div className="mb-2">
-            <img
-              src={doc}
-              alt="xml icon"
-              style={{ height: height, width: width }}
-            />
-          </div>
-          <div>
-            <h4>Forms</h4>
-          </div>
-        </button>
-        <button
-          type="button"
-          className="btn btn-light border p-4 px-5"
-          onClick={openUserRTF}
-        >
-          <div className="mb-2">
-            <img
-              src={rtf}
-              alt="xml icon"
-              style={{ height: height, width: width }}
-            />
-          </div>
-          <div>
-            <h4>Leaves</h4>
-          </div>
-        </button>
-        <button
-          type="button"
-          className="btn btn-light border py-4 px-5"
-          onClick={openUserPDF}
-        >
-          <div className="mb-2">
-            <img
-              src={pdf}
-              alt="xml icon"
-              style={{ height: height, width: width }}
-            />
-          </div>
-          <div>
-            <h4>Table</h4>
-          </div>
-        </button>
+      <div className="d-flex justify-content-between row">
+        <div className="col">
+          <button
+            type="button"
+            className="btn btn-light border p-4 px-5"
+            onClick={openUserXML}
+          >
+            <div className="mb-2">
+              <img
+                src={xml}
+                alt="xml icon"
+                style={{ height: height, width: width }}
+              />
+            </div>
+            <div>
+              <h4>Users</h4>
+            </div>
+          </button>
+        </div>
+        <div className="col m-2">
+          <button
+            type="button"
+            className="btn btn-light border p-4 px-5"
+            onClick={openUserXLS}
+          >
+            <div className="mb-2">
+              <img
+                src={xls}
+                alt="xls icon"
+                style={{ height: height, width: width }}
+              />
+            </div>
+            <div>
+              <h4>Charts</h4>
+            </div>
+          </button>
+        </div>
+        <div className="col m-2">
+          <button
+            type="button"
+            className="btn btn-light border p-4 px-5"
+            onClick={openUserDOC}
+          >
+            <div className="mb-2">
+              <img
+                src={doc}
+                alt="xml icon"
+                style={{ height: height, width: width }}
+              />
+            </div>
+            <div>
+              <h4>Forms</h4>
+            </div>
+          </button>
+        </div>
+        <div className="col m-2">
+          <button
+            type="button"
+            className="btn btn-light border p-4 px-5"
+            onClick={openUserRTF}
+          >
+            <div className="mb-2">
+              <img
+                src={rtf}
+                alt="xml icon"
+                style={{ height: height, width: width }}
+              />
+            </div>
+            <div>
+              <h4>Leaves</h4>
+            </div>
+          </button>
+        </div>
+        <div className="col m-2">
+          <button
+            type="button"
+            className="btn btn-light border py-4 px-5"
+            onClick={openUserPDF}
+          >
+            <div className="mb-2">
+              <img
+                src={pdf}
+                alt="xml icon"
+                style={{ height: height, width: width }}
+              />
+            </div>
+            <div>
+              <h4>Table</h4>
+            </div>
+          </button>
+        </div>
       </div>
     </div>
   );

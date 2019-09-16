@@ -2,10 +2,16 @@ import * as React from "react";
 import EmployeeService from "../../services/employeeservice";
 import { IEmployee } from "../../models/employee";
 
+interface IValidateProfile {
+  value: string;
+  isValid: boolean;
+  message: string;
+}
+
 interface IProfileState {
-  firstname: string;
-  lastname: string;
-  role: string;
+  firstname: IValidateProfile;
+  lastname: IValidateProfile;
+  role: IValidateProfile;
   user: IEmployee;
 }
 
@@ -13,9 +19,21 @@ class ProfileComponent extends React.Component<{}, IProfileState> {
   constructor(props: any) {
     super(props);
     this.state = {
-      firstname: "",
-      lastname: "",
-      role: "",
+      firstname: {
+        value: "",
+        isValid: true,
+        message: "Please choose a firstname."
+      },
+      lastname: {
+        value: "",
+        isValid: true,
+        message: "Please choose a lastname."
+      },
+      role: {
+        value: "",
+        isValid: true,
+        message: "Please choose a role."
+      },
       user: {
         employeeId: 0,
         username: "",
@@ -39,35 +57,91 @@ class ProfileComponent extends React.Component<{}, IProfileState> {
       )[0];
       this.setState({
         user: employee,
-        firstname: employee.firstname,
-        lastname: employee.lastname,
-        role: employee.role
+        firstname: {
+          value: employee.firstname,
+          isValid: true,
+          message: "Please choose a firstname."
+        },
+        lastname: {
+          value: employee.lastname,
+          isValid: true,
+          message: "Please choose a lastname."
+        },
+        role: {
+          value: employee.role,
+          isValid: true,
+          message: "Please choose a role."
+        }
       });
     });
   }
 
   loadFirstname = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ firstname: event.target.value });
+    this.setState({
+      firstname: {
+        value: event.target.value,
+        isValid: true,
+        message: "Please choose a firstname."
+      }
+    });
   };
   loadLastname = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ lastname: event.target.value });
+    this.setState({
+      lastname: {
+        value: event.target.value,
+        isValid: true,
+        message: "Please choose a lastname."
+      }
+    });
   };
   loadRole = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ role: event.target.value });
+    this.setState({
+      role: {
+        value: event.target.value,
+        isValid: true,
+        message: "Please choose a role."
+      }
+    });
   };
 
   editUser = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    let employee = this.state.user;
-    employee.firstname = this.state.firstname;
-    employee.lastname = this.state.lastname;
-    employee.role = this.state.role;
-    EmployeeService.updateEmployee(employee, employee.employeeId).subscribe(
-      () => {
-        console.log(employee);
-        console.log("Employee profile updated...");
-      }
-    );
+    if (this.state.firstname.value === "") {
+      this.setState({
+        firstname: {
+          value: "",
+          isValid: false,
+          message: "Please choose a firstname."
+        }
+      });
+    } else if (this.state.lastname.value === "") {
+      this.setState({
+        lastname: {
+          value: "",
+          isValid: false,
+          message: "Please choose a lastname."
+        }
+      });
+    } else if (this.state.role.value === "") {
+      this.setState({
+        role: {
+          value: "",
+          isValid: false,
+          message: "Please choose a role."
+        }
+      });
+    } else {
+      let employee = this.state.user;
+      employee.firstname = this.state.firstname.value;
+      employee.lastname = this.state.lastname.value;
+      employee.role = this.state.role.value;
+      EmployeeService.updateEmployee(employee, employee.employeeId).subscribe(
+        () => {
+          console.log(employee);
+          console.log("Employee profile updated...");
+        }
+      );
+    }
   };
 
   render() {
@@ -82,35 +156,53 @@ class ProfileComponent extends React.Component<{}, IProfileState> {
               <label>Firstname</label>
               <input
                 type="text"
-                className="form-control"
+                className={
+                  "form-control " +
+                  (this.state.firstname.isValid ? null : "is-invalid")
+                }
                 id="firstname"
                 aria-describedby="firstnameHelp"
                 placeholder="Enter first name"
-                value={this.state.firstname}
+                value={this.state.firstname.value}
                 onChange={this.loadFirstname}
               />
+              <div className="invalid-feedback">
+                {this.state.firstname.message}
+              </div>
             </div>
             <div className="form-group">
               <label>Lastname</label>
               <input
                 type="text"
-                className="form-control"
+                className={
+                  "form-control " +
+                  (this.state.lastname.isValid ? null : "is-invalid")
+                }
                 id="lastname"
                 placeholder="Enter last name"
-                value={this.state.lastname}
+                value={this.state.lastname.value}
                 onChange={this.loadLastname}
               />
+              <div className="invalid-feedback">
+                {this.state.lastname.message}
+              </div>
             </div>
             <div className="form-group">
               <label>Role</label>
               <input
                 type="text"
-                className="form-control"
+                className={
+                  "form-control " +
+                  (this.state.role.isValid ? null : "is-invalid")
+                }
                 id="role"
                 placeholder="Your Position"
-                value={this.state.role}
+                value={this.state.role.value}
                 onChange={this.loadRole}
               />
+              <div className="invalid-feedback">
+                {this.state.role.message}
+              </div>
             </div>
             <div className="text-center">
               <button type="submit" className="btn btn-dark px-4 mt-2">
