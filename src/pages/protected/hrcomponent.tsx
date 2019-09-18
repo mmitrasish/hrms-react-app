@@ -24,7 +24,7 @@ export default class HRComponent extends React.Component<{}, IHRState> {
       tardyEmployeeList: [],
       absenteeEmployeeList: [],
       user: {
-        employeeId: 0,
+        _id: "",
         username: "",
         password: "",
         firstname: "",
@@ -61,9 +61,9 @@ export default class HRComponent extends React.Component<{}, IHRState> {
     });
   }
 
-  updateEmployeePerformance = (employeeId: number, performance: string) => {
+  updateEmployeePerformance = (_id: string, performance: string) => {
     let selectedEmployee = this.state.employeeList.filter(
-      employee => employee.employeeId === employeeId
+      employee => employee._id === _id
     )[0];
     let updatedEmployees: IEmployee[] = [];
     this.state.employeeList.forEach(employee => {
@@ -77,14 +77,12 @@ export default class HRComponent extends React.Component<{}, IHRState> {
     selectedEmployee.isPunctual = performance === "Punctual";
     selectedEmployee.isTardy = performance === "Tardy";
     selectedEmployee.isAbsentee = performance === "Absentee";
-    EmployeeService.updateEmployee(selectedEmployee, employeeId).subscribe(
-      () => {
-        console.log(
-          "Employee " + selectedEmployee.username + " Performance added..."
-        );
-        this.setState({ employeeList: updatedEmployees });
-      }
-    );
+    EmployeeService.updateEmployee(selectedEmployee, _id).subscribe(() => {
+      console.log(
+        "Employee " + selectedEmployee.username + " Performance added..."
+      );
+      this.setState({ employeeList: updatedEmployees });
+    });
   };
 
   render() {

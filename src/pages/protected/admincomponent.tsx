@@ -24,7 +24,7 @@ export default class AdminComponent extends React.Component<{}, IAdminState> {
       inactiveEmployeeList: [],
       activatedEmployeeList: [],
       user: {
-        employeeId: 0,
+        _id: "",
         username: "",
         password: "",
         firstname: "",
@@ -56,9 +56,9 @@ export default class AdminComponent extends React.Component<{}, IAdminState> {
       });
     });
   }
-  activateEmployee = (employeeId: number, activate: boolean) => {
+  activateEmployee = (_id: string, activate: boolean) => {
     let selectedEmployee = this.state.employeeList.filter(
-      employee => employee.employeeId === employeeId
+      employee => employee._id === _id
     )[0];
     selectedEmployee.isActivated = activate;
     let updatedEmployees: IEmployee[] = [];
@@ -68,13 +68,11 @@ export default class AdminComponent extends React.Component<{}, IAdminState> {
       }
       updatedEmployees.push(employee);
     });
-    EmployeeService.updateEmployee(selectedEmployee, employeeId).subscribe(
-      () => {
-        const activateString = activate ? " activated" : " deactivate";
-        console.log("Employee " + selectedEmployee.username + activateString);
-        this.setState({ employeeList: updatedEmployees });
-      }
-    );
+    EmployeeService.updateEmployee(selectedEmployee, _id).subscribe(() => {
+      const activateString = activate ? " activated" : " deactivate";
+      console.log("Employee " + selectedEmployee.username + activateString);
+      this.setState({ employeeList: updatedEmployees });
+    });
   };
 
   render() {

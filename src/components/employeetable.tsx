@@ -4,8 +4,8 @@ import EmployeeRow from "./employeerow";
 interface IEmployeeTableProps {
   employeeList: IEmployee[];
   role: string;
-  activateEmployee: (employeeId: number, activate: boolean) => void;
-  employeePerformance: (employeeId: number, performance: string) => void;
+  activateEmployee: (_id: string, activate: boolean) => void;
+  employeePerformance: (_id: string, performance: string) => void;
 }
 interface IEmployeeTableState {
   filteredEmployeeList: IEmployee[];
@@ -84,7 +84,7 @@ class EmployeeTable extends React.Component<
                 <EmployeeRow
                   employee={employee}
                   role={this.props.role}
-                  key={employee.employeeId}
+                  key={employee._id}
                   activateEmployee={this.props.activateEmployee}
                   employeePerformance={this.props.employeePerformance}
                 />

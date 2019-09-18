@@ -25,7 +25,7 @@ export default class EmployeeComponent extends React.Component<
       activeEmployeeList: [],
       inactiveEmployeeList: [],
       user: {
-        employeeId: 0,
+        _id: "",
         username: "",
         password: "",
         firstname: "",

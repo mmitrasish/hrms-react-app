@@ -20,89 +20,101 @@ class LoginComponent extends React.Component<RouteComponentProps, ILoginState> {
     super(props);
     this.state = {
       username: {
-        value: '',
+        value: "",
         isValid: true,
-        message: 'Please choose a username.'
+        message: "Please choose a username."
       },
       password: {
-        value: '',
+        value: "",
         isValid: true,
-        message: 'Please choose a password.'
+        message: "Please choose a password."
       },
       employeeList: []
     };
   }
   loadUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ username: {
-      value: event.target.value,
-      isValid: true,
-      message: 'Please choose a username.'
-    } });
+    this.setState({
+      username: {
+        value: event.target.value,
+        isValid: true,
+        message: "Please choose a username."
+      }
+    });
   };
   loadPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ password: {
-      value: event.target.value,
-      isValid: true,
-      message: 'Please choose a password.'
-    } });
+    this.setState({
+      password: {
+        value: event.target.value,
+        isValid: true,
+        message: "Please choose a password."
+      }
+    });
   };
   loginUser = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if(this.state.username.value === ''){
-      this.setState({ username: {
-        value: '',
-        isValid: false,
-        message: 'Please choose a username.'
-      } });
-    }else if(this.state.password.value === ''){
-      this.setState({ password: {
-        value: '',
-        isValid: false,
-        message: 'Please choose a password.'
-      } });
-    }else{
-      let isUserPresent =
-      this.state.employeeList.filter(
-        employee =>
-          employee.username === this.state.username.value &&
-          employee.password === this.state.password.value
-      ).length > 0;
-    if (isUserPresent) {
-      let user = this.state.employeeList.filter(
-        employee =>
-          employee.username === this.state.username.value &&
-          employee.password === this.state.password.value
-      )[0];
-
-      user.isActive = true;
-      let updateLocalStorage = new Promise((success, failure) => {
-        localStorage.setItem("isLoggedIn", isUserPresent + "");
-        localStorage.setItem("loggedUsername", this.state.username.value);
-        localStorage.setItem("loggedUserRole", user.role);
-        console.log(localStorage.getItem("loggedUserRole"));
-        success();
+    if (this.state.username.value === "") {
+      this.setState({
+        username: {
+          value: "",
+          isValid: false,
+          message: "Please choose a username."
+        }
       });
-      updateLocalStorage.then(() => {
-        EmployeeService.updateEmployee(user, user.employeeId).subscribe(() => {
-          console.log("Update Successful");
-          this.props.history.push("/");
-        });
+    } else if (this.state.password.value === "") {
+      this.setState({
+        password: {
+          value: "",
+          isValid: false,
+          message: "Please choose a password."
+        }
       });
     } else {
-      this.setState({ username: {
-        value: '',
-        isValid: false,
-        message: 'Username doesnot match.'
-      }, password: {
-        value: '',
-        isValid: false,
-        message: 'Password doesnot match.'
-      } });
-    }
+      let isUserPresent =
+        this.state.employeeList.filter(
+          employee =>
+            employee.username === this.state.username.value &&
+            employee.password === this.state.password.value
+        ).length > 0;
+      if (isUserPresent) {
+        let user = this.state.employeeList.filter(
+          employee =>
+            employee.username === this.state.username.value &&
+            employee.password === this.state.password.value
+        )[0];
+
+        user.isActive = true;
+        let updateLocalStorage = new Promise((success, failure) => {
+          localStorage.setItem("isLoggedIn", isUserPresent + "");
+          localStorage.setItem("loggedUsername", this.state.username.value);
+          localStorage.setItem("loggedUserRole", user.role);
+          console.log(localStorage.getItem("loggedUserRole"));
+          success();
+        });
+        updateLocalStorage.then(() => {
+          EmployeeService.updateEmployee(user, user._id).subscribe(() => {
+            console.log("Update Successful");
+            this.props.history.push("/");
+          });
+        });
+      } else {
+        this.setState({
+          username: {
+            value: "",
+            isValid: false,
+            message: "Username doesnot match."
+          },
+          password: {
+            value: "",
+            isValid: false,
+            message: "Password doesnot match."
+          }
+        });
+      }
     }
   };
   componentDidMount() {
     EmployeeService.getEmployee().subscribe((employees: IEmployee[]) => {
+      console.log(employees);
       this.setState({ employeeList: employees });
     });
   }
@@ -118,26 +130,36 @@ class LoginComponent extends React.Component<RouteComponentProps, ILoginState> {
               <label>Username</label>
               <input
                 type="text"
-                className={"form-control " + (this.state.username.isValid ? null : 'is-invalid')}
+                className={
+                  "form-control " +
+                  (this.state.username.isValid ? null : "is-invalid")
+                }
                 id="username"
                 aria-describedby="usernameHelp"
                 placeholder="Enter username"
                 value={this.state.username.value}
                 onChange={this.loadUsername}
               />
-              <div className="invalid-feedback">{this.state.username.message}</div>
+              <div className="invalid-feedback">
+                {this.state.username.message}
+              </div>
             </div>
             <div className="form-group">
               <label>Password</label>
               <input
                 type="password"
-                className={"form-control " + (this.state.password.isValid ? null : 'is-invalid')}
+                className={
+                  "form-control " +
+                  (this.state.password.isValid ? null : "is-invalid")
+                }
                 id="password"
                 placeholder="Password"
                 value={this.state.password.value}
                 onChange={this.loadPassword}
               />
-              <div className="invalid-feedback">{this.state.password.message}</div>
+              <div className="invalid-feedback">
+                {this.state.password.message}
+              </div>
             </div>
             <div className="text-center">
               <button type="submit" className="btn btn-dark px-4 mt-2">

@@ -3,23 +3,23 @@ import { IEmployee } from "../models/employee";
 interface IEmployeeRowProps {
   employee: IEmployee;
   role: string;
-  activateEmployee: (employeeId: number, activate: boolean) => void;
-  employeePerformance: (employeeId: number, performance: string) => void;
+  activateEmployee: (employeeId: string, activate: boolean) => void;
+  employeePerformance: (employeeId: string, performance: string) => void;
 }
 const EmployeeRow: React.FC<IEmployeeRowProps> = (props: IEmployeeRowProps) => {
   let activateEmployee = () => {
-    props.activateEmployee(props.employee.employeeId, true);
+    props.activateEmployee(props.employee._id, true);
   };
   let deactivateEmployee = () => {
-    props.activateEmployee(props.employee.employeeId, false);
+    props.activateEmployee(props.employee._id, false);
   };
   let addPerformance = (event: React.ChangeEvent<HTMLSelectElement>) => {
     console.log(event.target.value);
-    props.employeePerformance(props.employee.employeeId, event.target.value);
+    props.employeePerformance(props.employee._id, event.target.value);
   };
   return (
     <tr>
-      <th scope="row">{props.employee.employeeId}</th>
+      <th scope="row">{props.employee._id}</th>
       <td>
         {props.role === "Admin"
           ? props.employee.username

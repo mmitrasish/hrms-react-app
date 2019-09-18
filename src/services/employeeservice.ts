@@ -8,7 +8,7 @@ class EmployeeService {
       // for lazy loading
       {
         return from<Promise<IEmployee[]>>( // generic type coversion of promise to observable
-          fetch(`http://localhost:3500/users`)
+          fetch(`http://localhost:3500/employees`)
             .then(r => r.json())
             .then(this.mapToEmployees)
         );
@@ -19,7 +19,7 @@ class EmployeeService {
   public postEmployee = (employee: any): Observable<any> => {
     return defer(() => {
       return from<Promise<any>>(
-        fetch(`http://localhost:3500/users`, {
+        fetch(`http://localhost:3500/employees`, {
           headers: { "Content-Type": "application/json; charset=utf-8" },
           method: "POST",
           body: JSON.stringify(employee)
@@ -28,10 +28,10 @@ class EmployeeService {
     });
   };
 
-  public updateEmployee = (update: any, id: number): Observable<any> => {
+  public updateEmployee = (update: any, id: string): Observable<any> => {
     return defer(() => {
       return from<Promise<any>>(
-        fetch(`http://localhost:3500/users/${id}`, {
+        fetch(`http://localhost:3500/employees/${id}`, {
           headers: { "Content-Type": "application/json; charset=utf-8" },
           method: "PUT",
           body: JSON.stringify(update)
@@ -46,7 +46,7 @@ class EmployeeService {
 
   private mapToEmployee(employee: IEmployee): IEmployee {
     return {
-      employeeId: employee.employeeId,
+      _id: employee._id,
       username: employee.username,
       password: employee.password,
       firstname: employee.firstname,

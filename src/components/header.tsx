@@ -14,7 +14,7 @@ const Header: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
       localStorage.removeItem("loggedUsername");
       localStorage.removeItem("loggedUserRole");
 
-      EmployeeService.updateEmployee(user, user.employeeId).subscribe(() => {
+      EmployeeService.updateEmployee(user, user._id).subscribe(() => {
         console.log("Update Successful");
         props.history.push("/login");
       });

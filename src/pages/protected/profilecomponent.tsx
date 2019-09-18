@@ -35,7 +35,7 @@ class ProfileComponent extends React.Component<{}, IProfileState> {
         message: "Please choose a role."
       },
       user: {
-        employeeId: 0,
+        _id: "",
         username: "",
         password: "",
         firstname: "",
@@ -135,12 +135,10 @@ class ProfileComponent extends React.Component<{}, IProfileState> {
       employee.firstname = this.state.firstname.value;
       employee.lastname = this.state.lastname.value;
       employee.role = this.state.role.value;
-      EmployeeService.updateEmployee(employee, employee.employeeId).subscribe(
-        () => {
-          console.log(employee);
-          console.log("Employee profile updated...");
-        }
-      );
+      EmployeeService.updateEmployee(employee, employee._id).subscribe(() => {
+        console.log(employee);
+        console.log("Employee profile updated...");
+      });
     }
   };
 
@@ -200,9 +198,7 @@ class ProfileComponent extends React.Component<{}, IProfileState> {
                 value={this.state.role.value}
                 onChange={this.loadRole}
               />
-              <div className="invalid-feedback">
-                {this.state.role.message}
-              </div>
+              <div className="invalid-feedback">{this.state.role.message}</div>
             </div>
             <div className="text-center">
               <button type="submit" className="btn btn-dark px-4 mt-2">
