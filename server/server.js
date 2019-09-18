@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
+const PORT = process.env.PORT || 5000
 
 mongoose.connect("mongodb://localhost:27017/hrms", {
     useNewUrlParser: true,
@@ -16,4 +17,4 @@ mongoose.connect("mongodb://localhost:27017/hrms", {
 app.use(bodyParser.json());
 app.use(cors());
 router(app);
-app.listen(3500, () => console.log('Express server started'));
+app.listen(PORT, () => console.log('Express server started'));
