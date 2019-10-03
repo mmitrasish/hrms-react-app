@@ -5,6 +5,8 @@ import EmployeeTable from "../../components/employeetable";
 import ProfileComponent from "./profilecomponent";
 import Card from "../../components/cardcomponent";
 import Chart from "../../components/chartcomponent";
+import Toast from "../../components/toastcomponent";
+import $ from "jquery";
 
 interface IHRState {
   employeeList: IEmployee[];
@@ -13,6 +15,8 @@ interface IHRState {
   absenteeEmployeeList: IEmployee[];
   user: IEmployee;
   isLoaded: boolean;
+  toastMessage: string;
+  toastTitle: string;
 }
 
 export default class HRComponent extends React.Component<{}, IHRState> {
@@ -36,7 +40,9 @@ export default class HRComponent extends React.Component<{}, IHRState> {
         isPunctual: false,
         isAbsentee: false
       },
-      isLoaded: false
+      isLoaded: false,
+      toastMessage: "",
+      toastTitle: ""
     };
   }
 
@@ -81,13 +87,27 @@ export default class HRComponent extends React.Component<{}, IHRState> {
       console.log(
         "Employee " + selectedEmployee.username + " Performance added..."
       );
-      this.setState({ employeeList: updatedEmployees });
+      this.setState(
+        {
+          employeeList: updatedEmployees,
+          toastTitle: "Performance",
+          toastMessage:
+            "Employee " + selectedEmployee.username + " Performance added..."
+        },
+        () => {
+          ($(".toast") as any).toast("show");
+        }
+      );
     });
   };
 
   render() {
     return (
       <div className="HR">
+        <Toast
+          message={this.state.toastMessage}
+          title={this.state.toastTitle}
+        />
         {this.state.isLoaded ? (
           this.state.user.isActivated ? (
             <div className="container my-4">

@@ -2,6 +2,7 @@ import * as React from "react";
 import { IEmployee } from "../models/employee";
 interface IEmployeeRowProps {
   employee: IEmployee;
+  index: number;
   role: string;
   activateEmployee: (employeeId: string, activate: boolean) => void;
   employeePerformance: (employeeId: string, performance: string) => void;
@@ -19,7 +20,7 @@ const EmployeeRow: React.FC<IEmployeeRowProps> = (props: IEmployeeRowProps) => {
   };
   return (
     <tr>
-      <th scope="row">{props.employee._id}</th>
+      <th scope="row">{props.index}</th>
       <td>
         {props.role === "Admin"
           ? props.employee.username
@@ -50,7 +51,14 @@ const EmployeeRow: React.FC<IEmployeeRowProps> = (props: IEmployeeRowProps) => {
               Activate
             </button>
           ) : (
-            <button className="btn btn-danger" onClick={deactivateEmployee}>
+            <button
+              className="btn btn-danger"
+              onClick={deactivateEmployee}
+              disabled={
+                props.employee.username ===
+                localStorage.getItem("loggedUsername")
+              }
+            >
               Deactivate
             </button>
           )}

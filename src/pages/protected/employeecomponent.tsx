@@ -2,9 +2,6 @@ import * as React from "react";
 import { IEmployee } from "../../models/employee";
 import EmployeeService from "../../services/employeeservice";
 import ProfileComponent from "./profilecomponent";
-import EmployeeTable from "../../components/employeetable";
-import Card from "../../components/cardcomponent";
-import Chart from "../../components/chartcomponent";
 
 interface IEmployeeState {
   employeeList: IEmployee[];
@@ -65,60 +62,8 @@ export default class EmployeeComponent extends React.Component<
       <div className="Employee">
         {this.state.isLoaded ? (
           this.state.user.isActivated ? (
-            <div className="container p-4">
-              <div className="row container-fluid mb-4" style={{ padding: 0 }}>
-                <div className="col-md-3 col-sm-6 py-3">
-                  <Card title={"Users"} body={this.state.employeeList.length} />
-                </div>
-                <div className="col-md-3 col-sm-6 py-3">
-                  <Card
-                    title={"Active"}
-                    body={this.state.activeEmployeeList.length}
-                  />
-                </div>
-                <div className="col-md-3 col-sm-6 py-3">
-                  <Card
-                    title={"Inactive"}
-                    body={this.state.inactiveEmployeeList.length}
-                  />
-                </div>
-              </div>
-              <div
-                className="row container-fluid mb-4 d-flex justify-content-between"
-                style={{ padding: 0 }}
-              >
-                <div className="col-md-6 col-sm-6 py-3">
-                  <Chart
-                    labels={["Active", "Inactive"]}
-                    chartData={[
-                      this.state.activeEmployeeList.length,
-                      this.state.inactiveEmployeeList.length
-                    ]}
-                    color={["#28A745", "#DC3545"]}
-                    title={"Employee Presence"}
-                  />
-                </div>
-                <div className="col-md-6 col-sm-6 py-3">
-                  <Chart
-                    labels={["Punctual", "Tardy", "Absentee"]}
-                    chartData={[
-                      this.state.employeeList.filter(emp => emp.isPunctual)
-                        .length,
-                      this.state.employeeList.filter(emp => emp.isTardy).length,
-                      this.state.employeeList.filter(emp => emp.isAbsentee)
-                        .length
-                    ]}
-                    color={["#28A745", "#FFC107", "#DC3545"]}
-                    title={"Employee Attendence"}
-                  />
-                </div>
-              </div>
-              <EmployeeTable
-                employeeList={this.state.employeeList}
-                role={"Employee"}
-                activateEmployee={(employeeId, activate) => {}}
-                employeePerformance={(employeeId, performance) => {}}
-              />
+            <div className="container-fluid">
+              <ProfileComponent />
             </div>
           ) : (
             <div className="container-fluid">

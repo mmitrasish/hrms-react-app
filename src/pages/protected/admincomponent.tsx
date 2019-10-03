@@ -5,6 +5,8 @@ import EmployeeTable from "../../components/employeetable";
 import ProfileComponent from "./profilecomponent";
 import Card from "../../components/cardcomponent";
 import Chart from "../../components/chartcomponent";
+import Toast from "../../components/toastcomponent";
+import $ from "jquery";
 
 interface IAdminState {
   employeeList: IEmployee[];
@@ -13,6 +15,8 @@ interface IAdminState {
   activatedEmployeeList: IEmployee[];
   user: IEmployee;
   isLoaded: boolean;
+  toastMessage: string;
+  toastTitle: string;
 }
 
 export default class AdminComponent extends React.Component<{}, IAdminState> {
@@ -36,7 +40,9 @@ export default class AdminComponent extends React.Component<{}, IAdminState> {
         isPunctual: false,
         isAbsentee: false
       },
-      isLoaded: false
+      isLoaded: false,
+      toastMessage: "",
+      toastTitle: ""
     };
   }
   componentDidMount() {
@@ -71,13 +77,27 @@ export default class AdminComponent extends React.Component<{}, IAdminState> {
     EmployeeService.updateEmployee(selectedEmployee, _id).subscribe(() => {
       const activateString = activate ? " activated" : " deactivate";
       console.log("Employee " + selectedEmployee.username + activateString);
-      this.setState({ employeeList: updatedEmployees });
+      this.setState(
+        {
+          employeeList: updatedEmployees,
+          toastMessage:
+            "Employee " + selectedEmployee.username + " is " + activateString,
+          toastTitle: "Activated"
+        },
+        () => {
+          ($(".toast") as any).toast("show");
+        }
+      );
     });
   };
 
   render() {
     return (
       <div className="HR">
+        <Toast
+          message={this.state.toastMessage}
+          title={this.state.toastTitle}
+        />
         {this.state.isLoaded ? (
           this.state.user.isActivated ? (
             <div className="container my-4">

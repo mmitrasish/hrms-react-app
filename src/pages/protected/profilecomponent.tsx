@@ -1,6 +1,9 @@
 import * as React from "react";
 import EmployeeService from "../../services/employeeservice";
 import { IEmployee } from "../../models/employee";
+import $ from "jquery";
+import Toast from "../../components/toastcomponent";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 
 interface IValidateProfile {
   value: string;
@@ -15,8 +18,8 @@ interface IProfileState {
   user: IEmployee;
 }
 
-class ProfileComponent extends React.Component<{}, IProfileState> {
-  constructor(props: any) {
+class ProfileComponent extends React.Component<RouteComponentProps, IProfileState> {
+  constructor(props: RouteComponentProps) {
     super(props);
     this.state = {
       firstname: {
@@ -94,7 +97,7 @@ class ProfileComponent extends React.Component<{}, IProfileState> {
       }
     });
   };
-  loadRole = (event: React.ChangeEvent<HTMLInputElement>) => {
+  loadRole = (event: React.ChangeEvent<HTMLSelectElement>) => {
     this.setState({
       role: {
         value: event.target.value,
@@ -138,6 +141,8 @@ class ProfileComponent extends React.Component<{}, IProfileState> {
       EmployeeService.updateEmployee(employee, employee._id).subscribe(() => {
         console.log(employee);
         console.log("Employee profile updated...");
+        ($(".toast") as any).toast("show");
+        this.props.history.push("/dashboard");
       });
     }
   };
@@ -145,6 +150,10 @@ class ProfileComponent extends React.Component<{}, IProfileState> {
   render() {
     return (
       <div className="d-flex justify-content-center">
+        <Toast
+          message={"You have updated your profile"}
+          title={"Profile Updated"}
+        />
         <form onSubmit={this.editUser} className="col-md-4">
           <div
             style={{ marginTop: "4em", padding: "4em" }}
@@ -187,17 +196,20 @@ class ProfileComponent extends React.Component<{}, IProfileState> {
             </div>
             <div className="form-group">
               <label>Role</label>
-              <input
-                type="text"
+              <select
                 className={
                   "form-control " +
                   (this.state.role.isValid ? null : "is-invalid")
                 }
                 id="role"
-                placeholder="Your Position"
+                aria-describedby="roleHelp"
                 value={this.state.role.value}
                 onChange={this.loadRole}
-              />
+              >
+                <option value="Admin">Admin</option>
+                <option value="HR">HR</option>
+                <option value="Employee">Employee</option>
+              </select>
               <div className="invalid-feedback">{this.state.role.message}</div>
             </div>
             <div className="text-center">
@@ -211,4 +223,4 @@ class ProfileComponent extends React.Component<{}, IProfileState> {
     );
   }
 }
-export default ProfileComponent;
+export default withRouter(ProfileComponent);

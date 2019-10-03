@@ -56,7 +56,7 @@ class RegisterComponent extends React.Component<
       }
     });
   };
-  loadRole = (event: React.ChangeEvent<HTMLInputElement>) => {
+  loadRole = (event: React.ChangeEvent<HTMLSelectElement>) => {
     this.setState({
       role: {
         value: event.target.value,
@@ -170,18 +170,20 @@ class RegisterComponent extends React.Component<
             </div>
             <div className="form-group">
               <label>Role</label>
-              <input
-                type="text"
+              <select
                 className={
                   "form-control " +
                   (this.state.role.isValid ? null : "is-invalid")
                 }
                 id="role"
-                placeholder="Your Position"
                 aria-describedby="roleHelp"
                 value={this.state.role.value}
                 onChange={this.loadRole}
-              />
+              >
+                <option value="Admin">Admin</option>
+                <option value="HR">HR</option>
+                <option value="Employee">Employee</option>
+              </select>
               <div className="invalid-feedback">{this.state.role.message}</div>
             </div>
             <div className="text-center">

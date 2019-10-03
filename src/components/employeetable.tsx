@@ -80,10 +80,11 @@ class EmployeeTable extends React.Component<
               </tr>
             </thead>
             <tbody>
-              {this.state.filteredEmployeeList.map((employee: IEmployee) => (
+              {this.state.filteredEmployeeList.map((employee: IEmployee, index: number) => (
                 <EmployeeRow
                   employee={employee}
                   role={this.props.role}
+                  index={index+1}
                   key={employee._id}
                   activateEmployee={this.props.activateEmployee}
                   employeePerformance={this.props.employeePerformance}
